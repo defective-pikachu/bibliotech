@@ -6,10 +6,10 @@ import {
 	TextInput,
 	TouchableOpacity,
 	View,
-	KeyboardAvoidingView,
 	TouchableWithoutFeedback,
 	Keyboard,
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase } from '../config';
 
 const LoginScreen = () => {
@@ -49,13 +49,13 @@ const LoginScreen = () => {
 	};
 
 	return (
-		<KeyboardAvoidingView style={{ flex: 1 }} behavior={'height'}>
+		<KeyboardAwareScrollView className={'mb-5'}>
 			<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 				<View className={'mx-auto'}>
 					<Text className={'text-2xl mt-20 font-bold text-center'}>
 						Welcome to BiblioTech
 					</Text>
-					<Text className={'mx-auto  text-base mt-10'}>
+					<Text className={'mx-auto font-thin text-base mt-10'}>
 						blabla bla blabla registration blabla bla login blablljdksajdka
 						blabla
 					</Text>
@@ -97,14 +97,14 @@ const LoginScreen = () => {
 									className={' text-base font-bold'}
 									onPress={() => navigation.navigate('Registration')}
 								>
-									Register
+									Sign up
 								</Text>
 							</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
 			</TouchableWithoutFeedback>
-		</KeyboardAvoidingView>
+		</KeyboardAwareScrollView>
 	);
 };
 
