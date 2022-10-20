@@ -5,7 +5,7 @@ import MyBooks from './components/MyBooks';
 
 const bookCard = 'Book Card';
 
-const myBooks = 'My Books';
+const myBooks = 'My Book';
 const Stack = createNativeStackNavigator();
 
 export const MyBooksStack = () => {

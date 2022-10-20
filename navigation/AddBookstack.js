@@ -15,11 +15,8 @@ export const AddBookstack = () => {
                 name={addBook} component={AddBook}
 
             />
-        
-            <Stack.Screen
-                options={{ headerShown: false }}
-                name={bookCard} component={BookCard}
-            />
+
+
 
         </Stack.Navigator>
 
