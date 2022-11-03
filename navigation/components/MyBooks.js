@@ -33,9 +33,15 @@ const MyBooks = () => {
 					});
 				}
 			});
-			setMyBookList(books);
-		});
-	}, []);
+			setMyBookList(books)
+			db.collection('users')
+				.doc(auth.currentUser.uid)
+				.update({
+					booksForLend: books.length
+				})
+
+		})
+	}, [myBookList]);
 
 	const handleBorrowedBooks = () => {
 		booksRef.onSnapshot((snapshot) => {
@@ -51,7 +57,7 @@ const MyBooks = () => {
 						user_id,
 						cover_img,
 						available,
-						pending, 
+						pending,
 						borrower,
 					});
 				}
@@ -59,6 +65,11 @@ const MyBooks = () => {
 			setIsMyBorrowedBooksActive(true);
 			setIsMyBooksActive(false);
 			setMyBookList(books);
+			db.collection('users')
+				.doc(auth.currentUser.uid)
+				.update({
+					booksBorrowed: books.length
+				})
 		});
 	};
 
@@ -99,22 +110,22 @@ const MyBooks = () => {
 	const cancelLoanRequest = (id) => {
 		updateDoc(doc(db, "books", id), {
 			available: true,
-			borrower: "", 
+			borrower: "",
 			pending: false,
-			})
-		.then(() => {
-			const messageQuery = db.collection('messages')
-			.where('bookID','==',id);
-			messageQuery
-				.get()
-				.then(function(querySnapshot) {
-					  querySnapshot.forEach(function(doc) {
-					doc.ref.delete();
+		})
+			.then(() => {
+				const messageQuery = db.collection('messages')
+					.where('bookID', '==', id);
+				messageQuery
+					.get()
+					.then(function (querySnapshot) {
+						querySnapshot.forEach(function (doc) {
+							doc.ref.delete();
+						})
 					})
-				})
-        	})
+			})
 			.catch((error) => alert(error.message));
-    };
+	};
 
 	return (
 		<ScrollView>
@@ -123,7 +134,7 @@ const MyBooks = () => {
 					<View
 						style={isMyBooksActive ? styles.innerContainerActive : styles.innerContainerInactive}
 					>
-						<TouchableOpacity style={styles.myBooks} onPress={handleMyBooks}> 
+						<TouchableOpacity style={styles.myBooks} onPress={handleMyBooks}>
 							<Text style={isMyBooksActive ? styles.textActive : styles.textInactive}>Books for Loan</Text>
 						</TouchableOpacity>
 					</View>
@@ -138,32 +149,32 @@ const MyBooks = () => {
 				{myBookList.map((book) => {
 					return (
 						<View style={styles.bookCard} key={book.id}>
-							
-						<TouchableOpacity
-							style={styles.bookContainer}
+
+							<TouchableOpacity
+								style={styles.bookContainer}
 								onPress={() => {
 									navigation.navigate('Book Card', book.id);
 								}}
 							>
-							<Image style={styles.bookImage} source={book.cover_img} />
+								<Image style={styles.bookImage} source={book.cover_img} />
 								<View style={styles.detailsWrapper}>
 									<Text style={styles.title}>{book.title}</Text>
 									<Text style={styles.author}>{book.author}</Text>
-									{ book.available && 
+									{book.available &&
 										<Text style={styles.availability}>
-										Available for lending
-									</Text>}
-									{ book.pending && !book.available &&
-									  <Text style={styles.availability}>
-										Loan request pending
-									</Text>}
-									{ !book.available && !book.pending &&
-									  <Text style={styles.availability}>
-										On loan
-									</Text>}
+											Available for lending
+										</Text>}
+									{book.pending && !book.available &&
+										<Text style={styles.availability}>
+											Loan request pending
+										</Text>}
+									{!book.available && !book.pending &&
+										<Text style={styles.availability}>
+											On loan
+										</Text>}
 								</View>
-								
-								<View style={styles.deleteWrapper}>		
+
+								<View style={styles.deleteWrapper}>
 									{(book.user_id === auth.currentUser?.uid) && book.available &&
 										<TouchableOpacity
 											onPress={() => {
