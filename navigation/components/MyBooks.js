@@ -32,16 +32,15 @@ const MyBooks = () => {
 						borrower,
 					});
 				}
-			});
+			})
 			setMyBookList(books)
 			db.collection('users')
 				.doc(auth.currentUser.uid)
 				.update({
 					booksForLend: books.length
 				})
-
 		})
-	}, [myBookList]);
+	}, [setMyBookList]);
 
 	const handleBorrowedBooks = () => {
 		booksRef.onSnapshot((snapshot) => {
