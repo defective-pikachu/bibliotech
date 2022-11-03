@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MyBooksStack from './MyBookStack';
 import RequestBookstack from './RequestBookStack';
-import AddBookstack from './AddBookstack';
+import AddBook from './components/AddBook';
 import ProfileStack from './ProfileStack';
 
 
@@ -48,7 +48,7 @@ const MainContainer = () => {
 			>
 				<Tab.Screen name={'Browse Books'} component={RequestBookstack} />
 				<Tab.Screen name={'My Books'} component={MyBooksStack} />
-				<Tab.Screen name={'Add Book'} component={AddBookstack} />
+				<Tab.Screen name={'Add Book'} component={AddBook} />
 				<Tab.Screen name={'My Profile'} component={ProfileStack} />
 			</Tab.Navigator>
 		</NavigationContainer>

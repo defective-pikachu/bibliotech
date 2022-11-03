@@ -108,17 +108,18 @@ export default function AddBook() {
 
 			{searchResults.map((book, index) => {
 				return (
-					<TouchableOpacity onPress={() => {
-						setChosenBook(book)
-						setChosenIndex(index)
-					}}>
+					<TouchableOpacity key={index}
+						onPress={() => {
+							setChosenBook(book)
+							setChosenIndex(index)
+						}}>
 						<View
 							style={
 								(index === chosenIndex) ? styles.bookOptionsSelected : styles.bookOptions
 							}
-							key={index}
 						>
 							<Text
+
 								numberOfLines={2}
 								ellipsizeMode={'tail'}
 								style={styles.textOptionsTitle}
